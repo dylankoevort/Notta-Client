@@ -1,12 +1,4 @@
-import {
-  writeFileSync,
-  existsSync,
-  mkdirSync,
-  unlink,
-  createReadStream,
-  createWriteStream,
-  copyFile,
-} from "fs";
+import { writeFileSync, existsSync, mkdirSync, unlink, copyFile } from "fs";
 
 const environment = process.env.npm_config_env; // 'dev' or 'live'
 console.log(`Environment: ${environment}`);
@@ -20,6 +12,7 @@ if (!["dev", "live"].includes(environment)) {
 }
 
 const envFilePath = "./environments/" + environment + "/envVariables.js";
+
 try {
   import(envFilePath)
     .then((module) => {

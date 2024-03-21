@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "npm run copy-env --env=dev && vite --open --port 5000 --host",
     "live": "npm run copy-env --env=live && vite --open --port 5000 --host",
-    "build": "npm run copy-env --env=live && vite build",
+    "build": "npm run build-env --env=live && vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "copy-env": "node replacements/copyEnvVariables.js"
+    "copy-env": "node replacements/copyEnvVariables.js",
+    "build-env": "node replacements/copyEnvVariablesBuild.js"
   },
   "dependencies": {
     "axios": "^1.6.7",
