@@ -1,9 +1,10 @@
 import axios from "axios";
-import envVariables from "config/envVariables";
+import envVariables from "configs/envVariables";
 
 const webService = axios.create({
   baseURL: envVariables.gateway,
   headers: {
+    accept: "*/*",
     "Content-Type": "application/json",
     token: envVariables.token,
   },
