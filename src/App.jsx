@@ -1,12 +1,9 @@
-import envVariables from "configs/envVariables";
-
-function App() {
+const App = () => {
   return (
     <>
-      <h1>Env: {envVariables.env}</h1>
-      <h1>Api Url: {envVariables.gateway}</h1>
+      <h1>Deployment Test</h1>
     </>
   );
-}
+};
 
 export default App;
