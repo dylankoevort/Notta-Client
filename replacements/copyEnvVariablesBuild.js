@@ -1,41 +1,26 @@
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from "fs";
 import { resolve } from "path";
 import dotenv from "dotenv";
-import { fileURLToPath } from "url";
 
 try {
   console.log("Generating envVariables.js file...");
 
-  // Get current file directory
-  const __dirname = fileURLToPath(import.meta.url);
-  const rootDirectory = resolve(__dirname, "../../");
-
   // Load .env file
-  const envPath = resolve(rootDirectory, ".env.production");
-  console.log("EnvPath: ", envPath);
+  dotenv.config({ path: resolve(process.cwd(), ".env.production") });
 
-  let envConfig;
-  try {
-    const envFileContent = readFileSync(envPath, "utf-8");
-    envConfig = dotenv.parse(envFileContent);
-  } catch (error) {
-    console.error("Error reading .env.production file:", error);
-  }
-
-  // Define output object
   const outputObject = {};
 
   console.log("Extracting VITE variables...");
 
-  // Iterate over envConfig and extract VITE variables
-  for (const key in envConfig) {
+  // Iterate over process.env and extract VITE variables
+  for (const key in process.env) {
     if (key.startsWith("VITE_")) {
       // Remove 'VITE_' prefix and convert to camelCase
       const camelCaseKey = key
         .replace(/^VITE_/, "")
         .toLowerCase()
         .replace(/_(\w)/g, (_, letter) => letter.toUpperCase());
-      outputObject[camelCaseKey] = envConfig[key];
+      outputObject[camelCaseKey] = process.env[key];
     }
   }
 
@@ -46,7 +31,7 @@ try {
   console.log("Defining output directory...");
 
   // Define output directory
-  const outputDir = resolve(rootDirectory, "src/configs");
+  const outputDir = resolve(process.cwd(), "src/configs");
 
   // Ensure output directory exists
   if (!existsSync(outputDir)) {
