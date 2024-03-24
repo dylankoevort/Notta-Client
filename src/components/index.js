@@ -1,4 +1,5 @@
 import ErrorBoundary from "./errorBoundary";
-import LoadingSpinner from "./loadingSpinner";
+import Spinner from "./spinner";
+import Navbar from "./navbar";
 
-export { ErrorBoundary, LoadingSpinner };
+export { ErrorBoundary, Spinner, Navbar };

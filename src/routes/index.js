@@ -5,6 +5,7 @@ import AppSettingsPage from "./settings";
 import DashboardPage from "./dashboard";
 import NoRoutePage from "./noRoute";
 import LoadingPage from "./loading";
+import AccountPage from "./account";
 
 export {
   LandingPage,
@@ -14,4 +15,5 @@ export {
   DashboardPage,
   NoRoutePage,
   LoadingPage,
+  AccountPage,
 };

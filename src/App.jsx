@@ -1,26 +1,17 @@
-import { Link, Outlet } from "react-router-dom";
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Outlet } from "react-router-dom";
+import { StyledApp } from "./styles/appStyles";
+import { Navbar } from "./components";
 
 const App = () => {
   return (
-    <>
-      <header className="header">
-        <div>
-          <div>
-            <p>Notta</p>
-          </div>
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
-          <SignedOut>
-            <Link to="/sign-in">Sign In</Link>
-          </SignedOut>
-        </div>
-      </header>
+    <StyledApp>
+      <nav>
+        <Navbar />
+      </nav>
       <main>
         <Outlet />
       </main>
-    </>
+    </StyledApp>
   );
 };
 

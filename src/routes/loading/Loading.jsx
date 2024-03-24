@@ -1,7 +1,8 @@
 import React from "react";
+import { Spinner } from "../../components";
 
 const LoadingPage = () => {
-  return <div>Loading...</div>;
+  return <Spinner />;
 };
 
 export default LoadingPage;

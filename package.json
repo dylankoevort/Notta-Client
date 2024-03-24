@@ -13,6 +13,7 @@
     "build-env": "node replacements/copyEnvVariablesBuild.js"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.8.3",
     "@clerk/clerk-react": "^4.30.7",
     "antd": "^5.15.3",
     "axios": "^1.6.7",

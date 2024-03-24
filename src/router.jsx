@@ -12,6 +12,7 @@ import {
   AppSettingsPage,
   NoRoutePage,
   LoadingPage,
+  AccountPage,
 } from "./routes";
 
 import { ErrorBoundary } from "./components";
@@ -24,6 +25,10 @@ const protectedRoutes = [
       {
         path: "/",
         element: <DashboardPage />,
+      },
+      {
+        path: "/account",
+        element: <AccountPage />,
       },
       {
         path: "/settings",
