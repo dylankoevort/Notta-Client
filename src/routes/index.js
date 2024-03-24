@@ -1,7 +1,17 @@
-import HomePage from "./Home";
-import SignInPage from "../routes/SignIn";
-import SignUpPage from "../routes/SignUp";
-import AppSettingsPage from "../routes/AppSettings";
-import DashboardPage from "../routes/Dashboard";
+import LandingPage from "./landing";
+import SignInPage from "./signIn";
+import SignUpPage from "./signUp";
+import AppSettingsPage from "./settings";
+import DashboardPage from "./dashboard";
+import NoRoutePage from "./noRoute";
+import LoadingPage from "./loading";
 
-export { HomePage, SignInPage, SignUpPage, AppSettingsPage, DashboardPage };
+export {
+  LandingPage,
+  SignInPage,
+  SignUpPage,
+  AppSettingsPage,
+  DashboardPage,
+  NoRoutePage,
+  LoadingPage,
+};

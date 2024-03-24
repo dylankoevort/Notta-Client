@@ -1,32 +1,75 @@
 import { createBrowserRouter } from "react-router-dom";
 
-// Import the layouts
-import { RootLayout, DashboardLayout } from "./layouts";
+import App from "./App";
 
-// Import the components
+import { DashboardLayout, RootLayout } from "./layouts";
+
 import {
-  HomePage,
+  LandingPage,
   SignInPage,
   SignUpPage,
   DashboardPage,
   AppSettingsPage,
+  NoRoutePage,
+  LoadingPage,
 } from "./routes";
+
+import { ErrorBoundary } from "./components";
+
+const protectedRoutes = [
+  {
+    path: "/",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "/",
+        element: <DashboardPage />,
+      },
+      {
+        path: "/settings",
+        element: <AppSettingsPage />,
+      },
+    ],
+  },
+  {
+    path: "/sign-in",
+    element: <SignInPage />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignUpPage />,
+  },
+];
+
+const unprotectedRoutes = [
+  {
+    path: "/web",
+    element: <LandingPage />,
+  },
+  {
+    path: "/loading",
+    element: <LoadingPage />,
+  },
+  {
+    path: "/error",
+    element: <ErrorBoundary />,
+  },
+  {
+    path: "*",
+    element: <NoRoutePage />,
+  },
+];
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
+    errorElement: <ErrorBoundary />,
     children: [
-      { path: "/", element: <HomePage /> },
-      { path: "/sign-in", element: <SignInPage /> },
-      { path: "/sign-up", element: <SignUpPage /> },
       {
-        path: "dashboard",
-        element: <DashboardLayout />,
-        children: [
-          { path: "/dashboard", element: <DashboardPage /> },
-          { path: "/dashboard/settings", element: <AppSettingsPage /> },
-        ],
+        element: <App />,
+        children: protectedRoutes,
       },
+      ...unprotectedRoutes,
     ],
   },
 ]);

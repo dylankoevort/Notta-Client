@@ -8,10 +8,7 @@ const DashboardPage = () => {
 
       <ul>
         <li>
-          <Link to="/dashboard/settings">App Settings</Link>
-        </li>
-        <li>
-          <Link to="/">Return to index</Link>
+          <Link to="/settings">Settings</Link>
         </li>
       </ul>
     </>

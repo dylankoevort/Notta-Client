@@ -2,14 +2,12 @@ import React, { useEffect } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-const DashboardLayout = () => {
-  const { isSignedIn, isLoaded } = useAuth();
+const LandingLayout = () => {
+  const { isLoaded, isSignedIn } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      navigate("/sign-in");
-    }
+    if (isSignedIn) navigate("/dashboard");
   }, [isSignedIn]);
 
   if (!isLoaded) return "Loading...";
@@ -17,4 +15,4 @@ const DashboardLayout = () => {
   return <Outlet />;
 };
 
-export default DashboardLayout;
+export default LandingLayout;

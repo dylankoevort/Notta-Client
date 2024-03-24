@@ -1,4 +1,4 @@
-import RootLayout from "./RootLayout";
 import DashboardLayout from "./DashboardLayout";
+import RootLayout from "./RootLayout";
 
-export { RootLayout, DashboardLayout };
+export { DashboardLayout, RootLayout };
