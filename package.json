@@ -16,6 +16,7 @@
     "@ant-design/icons": "^4.8.3",
     "@clerk/clerk-react": "^4.30.7",
     "@vercel/analytics": "^1.2.2",
+    "@vercel/speed-insights": "^1.0.10",
     "antd": "^5.15.3",
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",

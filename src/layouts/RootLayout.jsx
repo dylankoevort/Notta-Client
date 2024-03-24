@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
 import envVariables from "../configs/envVariables.js";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const PUBLISHABLE_KEY = envVariables.clerkPublishableKey;
 
@@ -15,6 +16,7 @@ const RootLayout = () => {
   return (
     <ClerkProvider navigate={navigate} publishableKey={PUBLISHABLE_KEY}>
       <Analytics />
+      <SpeedInsights />
       <Outlet />
     </ClerkProvider>
   );
