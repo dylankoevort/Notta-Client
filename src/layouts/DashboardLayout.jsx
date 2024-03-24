@@ -8,7 +8,7 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
-      navigate("/sign-in");
+      navigate("/web");
     }
   }, [isSignedIn]);
 
