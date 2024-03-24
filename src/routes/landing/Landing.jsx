@@ -1,23 +1,21 @@
 import { Link } from "react-router-dom";
 import { SignUpButton } from "@clerk/clerk-react";
+import { StyledLanding } from "./styles";
 
 const LandingPage = () => {
   return (
-    <div>
-      <h1>Landing Page</h1>
-      <div>
-        <ul>
-          <li>
-            <Link to="/sign-in">Sign In</Link>
-          </li>
-          <li>
-            <SignUpButton>
-              <Link to="/sign-up">Sign Up</Link>
-            </SignUpButton>
-          </li>
-        </ul>
+    <StyledLanding>
+      <h1>Notta</h1>
+      <h2>Welcome!</h2>
+      <div className="nav-buttons">
+        <Link to="/sign-in" className="nav-btn">
+          Sign In
+        </Link>
+        <Link to="/sign-up" className="nav-btn">
+          Sign Up
+        </Link>
       </div>
-    </div>
+    </StyledLanding>
   );
 };
 

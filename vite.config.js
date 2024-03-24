@@ -12,7 +12,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    sourcemap: "hidden",
+    sourcemap: "true", // true or hidden
     minify: true,
   },
   resolve: {
