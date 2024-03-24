@@ -1,12 +1,18 @@
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { Outlet } from "react-router-dom";
+import { StyledApp } from "./styles/appStyles";
+import { Navbar } from "./components";
 
 const App = () => {
-  return <></>;
+  return (
+    <StyledApp>
+      <nav>
+        <Navbar />
+      </nav>
+      <main>
+        <Outlet />
+      </main>
+    </StyledApp>
+  );
 };
 
 export default App;

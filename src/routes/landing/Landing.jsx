@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom";
+import { SignUpButton } from "@clerk/clerk-react";
 
-const HomePage = () => {
+const LandingPage = () => {
   return (
     <div>
-      <h1>Home Page</h1>
+      <h1>Landing Page</h1>
       <div>
         <ul>
-          <li>
-            <Link to="/sign-up">Sign Up</Link>
-          </li>
           <li>
             <Link to="/sign-in">Sign In</Link>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <SignUpButton>
+              <Link to="/sign-up">Sign Up</Link>
+            </SignUpButton>
           </li>
         </ul>
       </div>
@@ -21,4 +21,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default LandingPage;
