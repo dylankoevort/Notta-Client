@@ -8,9 +8,9 @@ const StyledApp = styled.div`
   gap: 20px;
 
   main {
-    height: calc(100% - 40px);
+    height: calc(100% - 80px);
     width: 100%;
-    padding: 20px 40px;
+    padding: 40px;
 
     overflow-y: auto;
   }

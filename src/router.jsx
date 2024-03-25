@@ -13,6 +13,7 @@ import {
   NoRoutePage,
   LoadingPage,
   AccountPage,
+  NotebookPage,
 } from "./routes";
 
 import { ErrorBoundary } from "./components";
@@ -34,7 +35,30 @@ const protectedRoutes = [
         path: "/settings",
         element: <AppSettingsPage />,
       },
+      {
+        path: "/notebooks",
+        element: <NotebookPage />,
+      },
+      {
+        path: "/notebooks/:notebookSlug",
+        element: <div>Notebook</div>,
+      },
+      {
+        path: "/notebooks/:notebookSlug/:noteSlug",
+        element: <div>Note</div>,
+      },
+      {
+        path: "/notebooks/:notebookSlug/:noteSlug/:pageSlug",
+        element: <div>Page</div>,
+      },
     ],
+  },
+];
+
+const unprotectedRoutes = [
+  {
+    path: "/web",
+    element: <LandingPage />,
   },
   {
     path: "/sign-in",
@@ -44,12 +68,17 @@ const protectedRoutes = [
     path: "/sign-up",
     element: <SignUpPage />,
   },
-];
-
-const unprotectedRoutes = [
   {
-    path: "/web",
-    element: <LandingPage />,
+    path: "/legal",
+    element: <div>Legal</div>,
+  },
+  {
+    path: "/legal/terms-and-conditions",
+    element: <div>Terms and Conditions</div>,
+  },
+  {
+    path: "/legal/privacy-policy",
+    element: <div>Privacy Policy</div>,
   },
   {
     path: "/loading",

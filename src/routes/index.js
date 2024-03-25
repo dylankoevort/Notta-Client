@@ -6,6 +6,7 @@ import DashboardPage from "./dashboard";
 import NoRoutePage from "./noRoute";
 import LoadingPage from "./loading";
 import AccountPage from "./account";
+import NotebookPage from "./notebooks";
 
 export {
   LandingPage,
@@ -16,4 +17,5 @@ export {
   NoRoutePage,
   LoadingPage,
   AccountPage,
+  NotebookPage,
 };
