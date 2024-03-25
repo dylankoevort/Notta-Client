@@ -49,29 +49,6 @@ const StyledNavbarContainer = styled.div`
     width: 100%;
     margin-bottom: 10px;
 
-    .home-item {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 10px;
-      padding: 4px 0;
-      width: 100%;
-
-      &:hover {
-        cursor: pointer;
-
-        p {
-          color: #aaaaaa;
-        }
-      }
-
-      &.active {
-        p {
-          font-weight: 700;
-        }
-      }
-    }
-
     .cl-userButtonBox {
       flex-direction: row-reverse;
     }
@@ -83,6 +60,10 @@ const StyledNavbarContainer = styled.div`
 
   .notebooks {
     margin: 10px 0;
+
+    h3 {
+      margin-bottom: 20px;
+    }
   }
 
   .settings {
@@ -91,27 +72,27 @@ const StyledNavbarContainer = styled.div`
     h3 {
       margin-bottom: 20px;
     }
+  }
 
-    .settings-item {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 10px;
-      padding: 4px 0;
-      width: 100%;
+  .nav-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+    width: 100%;
 
-      &:hover {
-        cursor: pointer;
+    &:hover {
+      cursor: pointer;
 
-        p {
-          color: #aaaaaa;
-        }
+      p {
+        color: #aaaaaa;
       }
+    }
 
-      &.active {
-        p {
-          font-weight: 700;
-        }
+    &.active {
+      p {
+        font-weight: 700;
       }
     }
   }

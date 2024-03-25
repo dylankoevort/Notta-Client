@@ -6,6 +6,7 @@ import {
   SettingOutlined,
   DeleteOutlined,
   HomeOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 import { Divider } from "antd";
 import { UserButton } from "@clerk/clerk-react";
@@ -17,31 +18,39 @@ const Navbar = () => {
         <div className="user">
           <UserButton showName={true} />
           <Divider />
-          <NavLink className="home-item" to={"/"}>
+          <NavLink className="nav-item" to={"/"}>
             <HomeOutlined />
             <p>home</p>
           </NavLink>
         </div>
         <div className="notebooks">
           <h3>notebooks</h3>
+          <ul>
+            <li>
+              <NavLink className="nav-item" to={"/notebooks"}>
+                <BookOutlined />
+                <p>notebooks</p>
+              </NavLink>
+            </li>
+          </ul>
         </div>
         <div className="settings">
           <h3>settings</h3>
           <ul>
             <li>
-              <NavLink className="settings-item" to={"/account"}>
+              <NavLink className="nav-item" to={"/account"}>
                 <UserOutlined />
                 <p>account management</p>
               </NavLink>
             </li>
             <li>
-              <NavLink className="settings-item" to={"/settings"}>
+              <NavLink className="nav-item" to={"/settings"}>
                 <SettingOutlined />
                 <p>app settings</p>
               </NavLink>
             </li>
             <li>
-              <NavLink className="settings-item" to={"/bin"}>
+              <NavLink className="nav-item" to={"/bin"}>
                 <DeleteOutlined />
                 <p>trash</p>
               </NavLink>
