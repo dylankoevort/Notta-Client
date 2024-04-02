@@ -58,7 +58,7 @@ const StyledNavbarContainer = styled.div`
     }
   }
 
-  .notebooks {
+  .collections {
     margin: 10px 0;
 
     h3 {
