@@ -1,21 +1,23 @@
-import LandingPage from "./landing";
-import SignInPage from "./signIn";
-import SignUpPage from "./signUp";
-import AppSettingsPage from "./settings";
-import DashboardPage from "./dashboard";
-import NoRoutePage from "./noRoute";
-import LoadingPage from "./loading";
-import AccountPage from "./account";
-import NotebookPage from "./notebooks";
+/* App */
+import DashboardPage from "./app/dashboard";
+import CollectionsPage from "./app/collections";
+import NotebooksPage from "./app/notebooks";
+import NotesPage from "./app/notes";
+import NotePage from "./app/note";
 
-export {
-  LandingPage,
-  SignInPage,
-  SignUpPage,
-  AppSettingsPage,
-  DashboardPage,
-  NoRoutePage,
-  LoadingPage,
-  AccountPage,
-  NotebookPage,
-};
+/* User */
+import AccountPage from "./user/account";
+import AppSettingsPage from "./user/settings";
+import SignInPage from "./user/signIn";
+import SignUpPage from "./user/signUp";
+
+/* Misc */
+import LandingPage from "./misc/landing";
+import LoadingPage from "./misc/loading";
+import NoRoutePage from "./misc/noRoute";
+
+export { DashboardPage, CollectionsPage, NotebooksPage, NotesPage, NotePage }; // App
+
+export { AccountPage, AppSettingsPage, SignInPage, SignUpPage }; // User
+
+export { LandingPage, LoadingPage, NoRoutePage }; // Misc

@@ -5,16 +5,14 @@ import App from "./App";
 import { DashboardLayout, RootLayout } from "./layouts";
 
 import {
-  LandingPage,
-  SignInPage,
-  SignUpPage,
   DashboardPage,
-  AppSettingsPage,
-  NoRoutePage,
-  LoadingPage,
-  AccountPage,
-  NotebookPage,
-} from "./routes";
+  CollectionsPage,
+  NotebooksPage,
+  NotesPage,
+  NotePage,
+} from "./routes"; // App
+import { AccountPage, AppSettingsPage, SignInPage, SignUpPage } from "./routes"; // User
+import { LandingPage, LoadingPage, NoRoutePage } from "./routes"; // Misc
 
 import { ErrorBoundary } from "./components";
 
@@ -36,20 +34,20 @@ const protectedRoutes = [
         element: <AppSettingsPage />,
       },
       {
-        path: "/notebooks",
-        element: <NotebookPage />,
+        path: "/collections",
+        element: <CollectionsPage />,
       },
       {
-        path: "/notebooks/:notebookSlug",
-        element: <div>Notebook</div>,
+        path: "/:collectionSlug",
+        element: <NotebooksPage />,
       },
       {
-        path: "/notebooks/:notebookSlug/:noteSlug",
-        element: <div>Note</div>,
+        path: "/:collectionSlug/:notebookSlug",
+        element: <NotesPage />,
       },
       {
-        path: "/notebooks/:notebookSlug/:noteSlug/:pageSlug",
-        element: <div>Page</div>,
+        path: "/:collectionSlug/:notebookSlug/:noteSlug",
+        element: <NotePage />,
       },
     ],
   },

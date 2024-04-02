@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyledNotebooks } from "./styles";
-import { returnNotebooks } from "../../mockData";
+import { returnNotebooks } from "../../../mockData";
 import { Divider } from "antd";
 import { Table } from "antd";
 

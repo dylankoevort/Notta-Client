@@ -9,8 +9,8 @@ const DashboardPage = () => {
       <Divider />
       <h2>recently opened</h2>
       <Divider />
-      <h2>notebooks</h2>
-      <h3>new notebook +</h3>
+      <h2>collections</h2>
+      <h3>new collection +</h3>
     </StyledDashboard>
   );
 };

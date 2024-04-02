@@ -1,17 +1,17 @@
 import {
-  returnPages,
-  returnPage,
   returnNotes,
   returnNote,
   returnNotebooks,
   returnNotebook,
+  returnCollections,
+  returnCollection,
 } from "./mockdata";
 
 export {
-  returnPages,
-  returnPage,
   returnNotes,
   returnNote,
   returnNotebooks,
   returnNotebook,
+  returnCollections,
+  returnCollection,
 };
