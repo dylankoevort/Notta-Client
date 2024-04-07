@@ -4,6 +4,7 @@ const StyledNavbar = styled.div`
   max-height: calc(100% - 80px);
   width: 100%;
   min-width: 300px;
+  max-width: 300px;
 
   display: flex;
   justify-content: center;
@@ -13,6 +14,8 @@ const StyledNavbar = styled.div`
 
 const StyledNavbarContainer = styled.div`
   width: calc(100% - 60px);
+  max-width: calc(100% - 60px);
+  overflow-x: hidden;
 
   display: flex;
   flex-direction: column;
@@ -58,16 +61,9 @@ const StyledNavbarContainer = styled.div`
     }
   }
 
-  .collections {
+  .nav-section {
     margin: 10px 0;
-
-    h3 {
-      margin-bottom: 20px;
-    }
-  }
-
-  .settings {
-    margin: 10px 0;
+    max-width: 240px;
 
     h3 {
       margin-bottom: 20px;
@@ -94,6 +90,16 @@ const StyledNavbarContainer = styled.div`
       p {
         font-weight: 700;
       }
+    }
+
+    .note-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    svg {
+      min-width: 16px !important;
     }
   }
 
