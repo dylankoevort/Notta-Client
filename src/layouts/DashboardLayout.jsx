@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { Spinner } from "../components";
 
 const DashboardLayout = () => {
   const { isSignedIn, isLoaded } = useAuth();
@@ -12,7 +13,7 @@ const DashboardLayout = () => {
     }
   }, [isSignedIn]);
 
-  if (!isLoaded) return "Loading...";
+  if (!isLoaded) return <Spinner />;
 
   return <Outlet />;
 };

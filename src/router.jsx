@@ -34,21 +34,29 @@ const protectedRoutes = [
         element: <AppSettingsPage />,
       },
       {
-        path: "/collections",
-        element: <CollectionsPage />,
-      },
-      {
-        path: "/:collectionSlug",
-        element: <NotebooksPage />,
-      },
-      {
-        path: "/:collectionSlug/:notebookSlug",
+        path: "/notes",
         element: <NotesPage />,
       },
       {
-        path: "/:collectionSlug/:notebookSlug/:noteSlug",
+        path: "/notes/:noteSlug",
         element: <NotePage />,
       },
+      // {
+      //   path: "/collections",
+      //   element: <CollectionsPage />,
+      // },
+      // {
+      //   path: "/:collectionSlug",
+      //   element: <NotebooksPage />,
+      // },
+      // {
+      //   path: "/:collectionSlug/:notebookSlug",
+      //   element: <NotesPage />,
+      // },
+      // {
+      //   path: "/:collectionSlug/:notebookSlug/",
+      //   element: <NotePage />,
+      // },
     ],
   },
 ];
