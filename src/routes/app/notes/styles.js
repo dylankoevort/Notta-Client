@@ -6,12 +6,22 @@ const StyledNotes = styled.div`
 
   .header {
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     .title {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
+
+    .actions {
+      .new-note {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
   }
 `;
 
