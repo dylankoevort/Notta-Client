@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useUser } from "@clerk/clerk-react";
 import { StyledNotes, StyledNoteContainer, StyledNoteItem } from "./styles";
 import { Divider, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { TbNotebook } from "react-icons/tb";
 import { returnNotes } from "../../../mockData/mockdata";
 import { Link } from "react-router-dom";
+import { addNote, getNotesByUserId } from "../../../api";
+import { useNavigate } from "react-router-dom";
 
 const Notes = () => {
+  const { user } = useUser();
+  const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     const fetchNotes = async () => {
+      if (!user) return;
       try {
-        const response = returnNotes();
-        setNotes(response);
+        const data = await getNotesByUserId(user?.id);
+        if (data) {
+          setNotes(data);
+        }
       } catch (error) {
         console.error("Error fetching notes:", error);
       }
@@ -21,13 +29,12 @@ const Notes = () => {
     fetchNotes();
   }, []);
 
-  const createNote = () => {
+  const createNote = async () => {
     try {
-      // create new note with default values
-      // serialize note content to json
-      // send to db
-      // fetch created note and get generated slug
-      // navigate to new note route
+      const res = await addNote(user);
+      if (res?.noteSlug) {
+        navigate(`/notes/${res.noteSlug}`);
+      }
     } catch (error) {
       console.error("Error creating note:", error);
     }
@@ -42,7 +49,9 @@ const Notes = () => {
         </span>
         <div className="actions">
           <span className="new-note">
-            <Button icon={<PlusOutlined />}>New Note</Button>
+            <Button icon={<PlusOutlined />} onClick={createNote}>
+              New Note
+            </Button>
           </span>
         </div>
       </div>
@@ -51,10 +60,13 @@ const Notes = () => {
 
       <StyledNoteContainer id="note-container">
         {notes.map((note) => (
-          <Link key={note.id} to={`/notes/${note.slug}`}>
-            <StyledNoteItem id={`note-${note.id}-${note.title}`} key={note.id}>
-              <h4 className="note-title">{note.title}</h4>
-              <p className="note-content">{note.content}</p>
+          <Link key={note.noteId} to={`/notes/${note.noteSlug}`}>
+            <StyledNoteItem
+              id={`note-${note.noteId}-${note.noteTitle}`}
+              key={note.noteId}
+            >
+              <h4 className="note-title">{note.noteTitle}</h4>
+              <p className="note-content">{note.noteContent}</p>
             </StyledNoteItem>
           </Link>
         ))}

@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
 const StyledNotes = styled.div`
-  // height: 100%;
-  // width: 100%;
-
   .header {
     width: 100%;
     display: flex;
@@ -70,6 +67,13 @@ const StyledNoteItem = styled.div`
     box-shadow: rgba(99, 99, 99, 0.5) 0px 2px 8px 0px;
     transform: scale(1.01);
     transition: all 0.2s ease-in-out;
+  }
+
+  a {
+    &:hover {
+      color: #747474;
+      color: red;
+    }
   }
 `;
 

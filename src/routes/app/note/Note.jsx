@@ -1,58 +1,56 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { StyledNote, StyledEditorContainer } from "./styles";
-import { returnNoteBySlug } from "../../../mockData/mockdata";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { StyledNote, StyledNoteHeader, StyledEditorContainer } from "./styles";
 import { Button, message, Popconfirm } from "antd";
 import { DeleteOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 import { Input } from "antd";
 import { useDebounce } from "../../../hooks";
+import { getNoteBySlug, updateNote } from "../../../api/NoteGateway";
 
 const Note = () => {
   let { noteSlug } = useParams();
+  const navigate = useNavigate();
   const { TextArea } = Input;
-  const [noteData, setNoteData] = useState();
-  const [editorContent, setEditorContent] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
+  const [noteData, setNoteData] = useState();
   const [deletePopOpen, setDeletePopOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const isFirstRender = useRef(true);
 
-  // Debounce editor content with a delay of 10 seconds
-  const debouncedContent = useDebounce(editorContent, 10000);
+  const debouncedTitle = useDebounce(noteData?.noteTitle, 5000);
+  const debouncedContent = useDebounce(noteData?.noteContent, 10000);
 
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const response = returnNoteBySlug(noteSlug);
-        setNoteData(response);
+        const res = await getNoteBySlug(noteSlug);
+        if (res) {
+          setNoteData(res);
+        }
       } catch (error) {
         console.error("Error fetching note:", error);
+        navigate("/notes");
       }
     };
+
     fetchNote();
   }, [noteSlug]);
 
   useEffect(() => {
-    if (noteData?.content) {
-      setEditorContent(noteData.content);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
     }
-  }, [noteData]);
-
-  useEffect(() => {
-    // Log debounced content changes
-    const data = {
-      time: Date.now(),
-      title: noteData?.title,
-      content: debouncedContent,
-    };
-    console.log(data);
-    // messageApi.success("Note saved!");
-  }, [debouncedContent]);
+    saveNote();
+  }, [debouncedContent, debouncedTitle]);
 
   const saveNote = async () => {
+    if (isFirstRender.current) {
+      return;
+    }
+
     const key = "key";
-
     messageApi.destroy();
-
     messageApi.open({
       key,
       type: "loading",
@@ -60,16 +58,16 @@ const Note = () => {
     });
 
     try {
-      // save note to db
+      const res = await updateNote(noteData);
 
-      setTimeout(() => {
+      if (res?.status === 200) {
         messageApi.open({
           key,
           type: "success",
           content: "Note saved!",
           duration: 2,
         });
-      }, 1000);
+      }
     } catch (error) {
       console.error("Error saving note:", error);
       messageApi.error("Error saving note :(");
@@ -99,8 +97,16 @@ const Note = () => {
     <>
       {contextHolder}
       <StyledNote id="StyledNote">
-        <div className="header">
-          <h1 id="note-title">{noteData?.title}</h1>
+        <StyledNoteHeader id="StyledNoteHeader">
+          <Input
+            id="note-title"
+            variant="borderless"
+            className="note-title"
+            value={noteData?.noteTitle}
+            onChange={(e) =>
+              setNoteData({ ...noteData, noteTitle: e.target.value })
+            }
+          />
           <div className="note-actions">
             <Button onClick={saveNote}>Save</Button>
             <Popconfirm
@@ -120,14 +126,16 @@ const Note = () => {
               </Button>
             </Popconfirm>
           </div>
-        </div>
+        </StyledNoteHeader>
 
         <StyledEditorContainer id="StyledEditorContainer">
           <TextArea
             id="note-editor"
             className="note-editor"
-            value={editorContent}
-            onChange={(e) => setEditorContent(e.target.value)}
+            value={noteData?.noteContent}
+            onChange={(e) =>
+              setNoteData({ ...noteData, noteContent: e.target.value })
+            }
             rows={4}
             autoSize
             variant="borderless"

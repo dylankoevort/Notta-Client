@@ -1,11 +1,20 @@
 import webService from "./WebService";
 import {
-  getNotes,
-  getNote,
+  getNotesByUserId,
+  getNoteById,
   addNote,
   updateNote,
   deleteNote,
-} from "./NotesGateway";
+} from "./NoteGateway";
+
+import {
+  getUsers,
+  getUserById,
+  addUser,
+  updateUser,
+  deleteUser,
+} from "./UserGateway";
 
 export { webService };
-export { getNotes, getNote, addNote, updateNote, deleteNote };
+export { getNotesByUserId, getNoteById, addNote, updateNote, deleteNote }; // Note
+export { getUsers, getUserById, addUser, updateUser, deleteUser }; // User
