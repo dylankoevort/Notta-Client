@@ -1,8 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Divider } from "antd";
 import { StyledDashboard } from "./styles";
+import { useEffect } from "react";
 
 const DashboardPage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/notes");
+  }, []);
+
   return (
     <StyledDashboard>
       <h1>Dashboard</h1>

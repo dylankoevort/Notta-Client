@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyledNavbar, StyledNavbarContainer } from "./styles";
 import { NavLink } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 import {
   UserOutlined,
   SettingOutlined,
@@ -11,22 +12,26 @@ import { SlNotebook } from "react-icons/sl";
 import { CgNotes } from "react-icons/cg";
 import { Divider } from "antd";
 import { UserButton } from "@clerk/clerk-react";
-import { returnNotes } from "../../mockData/mockdata";
+import { getNotesByUserId } from "../../api";
 
 const Navbar = () => {
+  const { user } = useUser();
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     const fetchNotes = async () => {
+      if (!user) return;
       try {
-        const response = returnNotes();
-        setNotes(response);
+        const data = await getNotesByUserId(user?.id);
+        if (data) {
+          setNotes(data);
+        }
       } catch (error) {
         console.error("Error fetching notes:", error);
       }
     };
     fetchNotes();
-  }, []);
+  }, [user]);
 
   return (
     <StyledNavbar>
@@ -49,10 +54,10 @@ const Navbar = () => {
               </NavLink>
             </li>
             {notes.map((note) => (
-              <li key={note.id}>
-                <NavLink className="nav-item" to={`/notes/${note.slug}`}>
+              <li key={note.noteId}>
+                <NavLink className="nav-item" to={`/notes/${note.noteSlug}`}>
                   <CgNotes />
-                  <p className="note-title">{note.title}</p>
+                  <p className="note-title">{note.noteTitle}</p>
                 </NavLink>
               </li>
             ))}
