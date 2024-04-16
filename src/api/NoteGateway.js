@@ -66,8 +66,11 @@ export async function updateNote(note) {
 
 export async function deleteNote(id) {
   try {
-    const res = await webService.delete(`/Note/DeleteNote/${id}`);
-    return res.data;
+    const params = {
+      noteId: id,
+    };
+    const res = await webService.delete(`/Note/DeleteNote`, { params });
+    return res;
   } catch (error) {
     console.error(`Error deleting note with ID ${id}:`, error);
     throw error;
