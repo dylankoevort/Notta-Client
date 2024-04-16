@@ -5,7 +5,11 @@ import { Button, message, Popconfirm } from "antd";
 import { DeleteOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 import { Input } from "antd";
 import { useDebounce } from "../../../hooks";
-import { getNoteBySlug, updateNote } from "../../../api/NoteGateway";
+import {
+  getNoteBySlug,
+  deleteNote,
+  updateNote,
+} from "../../../api/NoteGateway";
 
 const Note = () => {
   let { noteSlug } = useParams();
@@ -74,25 +78,24 @@ const Note = () => {
     }
   };
 
-  const deleteNote = async () => {
+  const handleDeleteNote = async () => {
     setDeleteLoading(true);
     try {
-      // delete note from db
-      // navigate to notes route
-
-      setTimeout(() => {
+      const res = await deleteNote(noteData.noteId);
+      if (res?.status === 200) {
         setDeletePopOpen(false);
-        setDeleteLoading(false);
         messageApi.success("Note deleted!");
-      }, 2000);
+        navigate("/notes");
+      } else {
+        throw new Error("Unexpected status code: " + res.status);
+      }
     } catch (error) {
       console.error("Error deleting note:", error);
-      setDeletePopOpen(false);
-      setDeleteLoading(false);
       messageApi.error("Error deleting note :(");
+    } finally {
+      setDeleteLoading(false); // Reset loading state regardless of success or failure
     }
   };
-
   return (
     <>
       {contextHolder}
@@ -113,7 +116,7 @@ const Note = () => {
               title="Delete note"
               description="Are you sure to delete this note?"
               open={deletePopOpen}
-              onConfirm={deleteNote}
+              onConfirm={handleDeleteNote}
               okButtonProps={{ loading: deleteLoading }}
               onCancel={() => setDeletePopOpen(false)}
               okText="Yes"

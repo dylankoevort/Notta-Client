@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyledNavbar, StyledNavbarContainer } from "./styles";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import {
   UserOutlined,
@@ -16,22 +16,28 @@ import { getNotesByUserId } from "../../api";
 
 const Navbar = () => {
   const { user } = useUser();
+  const location = useLocation();
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    const fetchNotes = async () => {
-      if (!user) return;
-      try {
-        const data = await getNotesByUserId(user?.id);
-        if (data) {
-          setNotes(data);
-        }
-      } catch (error) {
-        console.error("Error fetching notes:", error);
-      }
-    };
     fetchNotes();
-  }, [user]);
+  }, [user, location]);
+
+  const fetchNotes = async () => {
+    if (!user) return;
+    try {
+      const data = await getNotesByUserId(user?.id);
+      if (data) {
+        setNotes(data);
+      }
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+    }
+  };
+
+  const openPortfolio = () => {
+    window.open("https://dylankoevort.com", "_blank");
+  };
 
   return (
     <StyledNavbar>
@@ -72,12 +78,12 @@ const Navbar = () => {
                 <p>account management</p>
               </NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink className="nav-item" to={"/settings"}>
                 <SettingOutlined />
                 <p>app settings</p>
               </NavLink>
-            </li>
+            </li> */}
             {/* <li>
               <NavLink className="nav-item" to={"/bin"}>
                 <DeleteOutlined />
@@ -87,7 +93,9 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="version">
-          <h3>by koevort.</h3>
+          <h3 className="koevort" onClick={openPortfolio}>
+            by koevort.
+          </h3>
           <h3>1.0.0</h3>
         </div>
       </StyledNavbarContainer>
