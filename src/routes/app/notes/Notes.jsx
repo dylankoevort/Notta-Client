@@ -4,9 +4,8 @@ import { StyledNotes, StyledNoteContainer, StyledNoteItem } from "./styles";
 import { Divider, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { TbNotebook } from "react-icons/tb";
-import { returnNotes } from "../../../mockData/mockdata";
 import { Link } from "react-router-dom";
-import { addNote, getNotesByUserId } from "../../../api";
+import { createNote, getNotesByUserId } from "../../../api";
 import { useNavigate } from "react-router-dom";
 
 const Notes = () => {
@@ -18,9 +17,9 @@ const Notes = () => {
     const fetchNotes = async () => {
       if (!user) return;
       try {
-        const data = await getNotesByUserId(user?.id);
-        if (data) {
-          setNotes(data);
+        const res = await getNotesByUserId(user?.id);
+        if (res?.data) {
+          setNotes(res.data);
         }
       } catch (error) {
         console.error("Error fetching notes:", error);
@@ -29,11 +28,11 @@ const Notes = () => {
     fetchNotes();
   }, []);
 
-  const createNote = async () => {
+  const createNewNote = async () => {
     try {
-      const res = await addNote(user);
-      if (res?.noteSlug) {
-        navigate(`/notes/${res.noteSlug}`);
+      const res = await createNote(user);
+      if (res?.data?.noteId) {
+        navigate(`/notes/${res.data.noteId}`);
       }
     } catch (error) {
       console.error("Error creating note:", error);
@@ -49,7 +48,7 @@ const Notes = () => {
         </span>
         <div className="actions">
           <span className="new-note">
-            <Button icon={<PlusOutlined />} onClick={createNote}>
+            <Button icon={<PlusOutlined />} onClick={createNewNote}>
               New Note
             </Button>
           </span>
@@ -60,7 +59,7 @@ const Notes = () => {
 
       <StyledNoteContainer id="note-container">
         {notes.map((note) => (
-          <Link key={note.noteId} to={`/notes/${note.noteSlug}`}>
+          <Link key={note.noteId} to={`/notes/${note.noteId}`}>
             <StyledNoteItem
               id={`note-${note.noteId}-${note.noteTitle}`}
               key={note.noteId}

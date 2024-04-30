@@ -4,13 +4,7 @@ import App from "./App";
 
 import { DashboardLayout, RootLayout } from "./layouts";
 
-import {
-  DashboardPage,
-  CollectionsPage,
-  NotebooksPage,
-  NotesPage,
-  NotePage,
-} from "./routes"; // App
+import { DashboardPage, NotesPage, NotePage } from "./routes"; // App
 import { AccountPage, AppSettingsPage, SignInPage, SignUpPage } from "./routes"; // User
 import { LandingPage, LoadingPage, NoRoutePage } from "./routes"; // Misc
 
@@ -38,25 +32,9 @@ const protectedRoutes = [
         element: <NotesPage />,
       },
       {
-        path: "/notes/:noteSlug",
+        path: "/notes/:noteId",
         element: <NotePage />,
       },
-      // {
-      //   path: "/collections",
-      //   element: <CollectionsPage />,
-      // },
-      // {
-      //   path: "/:collectionSlug",
-      //   element: <NotebooksPage />,
-      // },
-      // {
-      //   path: "/:collectionSlug/:notebookSlug",
-      //   element: <NotesPage />,
-      // },
-      // {
-      //   path: "/:collectionSlug/:notebookSlug/",
-      //   element: <NotePage />,
-      // },
     ],
   },
 ];

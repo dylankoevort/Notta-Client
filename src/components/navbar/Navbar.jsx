@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyledNavbar, StyledNavbarContainer } from "./styles";
 import { NavLink, useLocation } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
-import {
-  UserOutlined,
-  SettingOutlined,
-  DeleteOutlined,
-  HomeOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, HomeOutlined } from "@ant-design/icons";
 import { SlNotebook } from "react-icons/sl";
 import { CgNotes } from "react-icons/cg";
 import { Divider } from "antd";
@@ -26,9 +21,9 @@ const Navbar = () => {
   const fetchNotes = async () => {
     if (!user) return;
     try {
-      const data = await getNotesByUserId(user?.id);
-      if (data) {
-        setNotes(data);
+      const res = await getNotesByUserId(user?.id);
+      if (res?.data) {
+        setNotes(res.data);
       }
     } catch (error) {
       console.error("Error fetching notes:", error);
@@ -61,7 +56,7 @@ const Navbar = () => {
             </li>
             {notes.map((note) => (
               <li key={note.noteId}>
-                <NavLink className="nav-item" to={`/notes/${note.noteSlug}`}>
+                <NavLink className="nav-item" to={`/notes/${note.noteId}`}>
                   <CgNotes />
                   <p className="note-title">{note.noteTitle}</p>
                 </NavLink>
@@ -78,18 +73,6 @@ const Navbar = () => {
                 <p>account management</p>
               </NavLink>
             </li>
-            {/* <li>
-              <NavLink className="nav-item" to={"/settings"}>
-                <SettingOutlined />
-                <p>app settings</p>
-              </NavLink>
-            </li> */}
-            {/* <li>
-              <NavLink className="nav-item" to={"/bin"}>
-                <DeleteOutlined />
-                <p>trash</p>
-              </NavLink>
-            </li> */}
           </ul>
         </div>
         <div className="version">

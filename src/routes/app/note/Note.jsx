@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useUser } from "@clerk/clerk-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { StyledNote, StyledNoteHeader, StyledEditorContainer } from "./styles";
 import { Button, message, Popconfirm } from "antd";
 import { DeleteOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 import { Input } from "antd";
 import { useDebounce } from "../../../hooks";
-import {
-  getNoteBySlug,
-  deleteNote,
-  updateNote,
-} from "../../../api/NoteGateway";
+import { getNoteById, deleteNote, updateNote } from "../../../api/NoteGateway";
 
 const Note = () => {
-  let { noteSlug } = useParams();
+  let { noteId } = useParams();
+  const { user } = useUser();
   const navigate = useNavigate();
   const { TextArea } = Input;
   const [messageApi, contextHolder] = message.useMessage();
@@ -27,9 +25,9 @@ const Note = () => {
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const res = await getNoteBySlug(noteSlug);
-        if (res) {
-          setNoteData(res);
+        const res = await getNoteById(user.id, noteId);
+        if (res?.data) {
+          setNoteData(res.data);
         }
       } catch (error) {
         console.error("Error fetching note:", error);
@@ -38,7 +36,7 @@ const Note = () => {
     };
 
     fetchNote();
-  }, [noteSlug]);
+  }, [noteId]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -48,43 +46,34 @@ const Note = () => {
     saveNote();
   }, [debouncedContent, debouncedTitle]);
 
+  const handleSaveNoteClick = async () => {
+    const saved = await saveNote();
+    if (saved) {
+      messageApi.success("Note saved successfully!");
+    }
+  };
+
   const saveNote = async () => {
-    if (isFirstRender.current) {
-      return;
+    if (isFirstRender.current || !noteData) {
+      return false;
     }
 
-    const key = "key";
-    messageApi.destroy();
-    messageApi.open({
-      key,
-      type: "loading",
-      content: "Saving note...",
-    });
-
     try {
-      const res = await updateNote(noteData);
-
-      if (res?.status === 200) {
-        messageApi.open({
-          key,
-          type: "success",
-          content: "Note saved!",
-          duration: 2,
-        });
-      }
+      await updateNote(user.id, noteData);
+      return true;
     } catch (error) {
       console.error("Error saving note:", error);
       messageApi.error("Error saving note :(");
+      return false;
     }
   };
 
   const handleDeleteNote = async () => {
     setDeleteLoading(true);
     try {
-      const res = await deleteNote(noteData.noteId);
-      if (res?.status === 200) {
+      const res = await deleteNote(user.id, noteData.noteId);
+      if (res?.status === 204) {
         setDeletePopOpen(false);
-        messageApi.success("Note deleted!");
         navigate("/notes");
       } else {
         throw new Error("Unexpected status code: " + res.status);
@@ -93,7 +82,8 @@ const Note = () => {
       console.error("Error deleting note:", error);
       messageApi.error("Error deleting note :(");
     } finally {
-      setDeleteLoading(false); // Reset loading state regardless of success or failure
+      setDeleteLoading(false);
+      setDeletePopOpen(false);
     }
   };
   return (
@@ -111,7 +101,7 @@ const Note = () => {
             }
           />
           <div className="note-actions">
-            <Button onClick={saveNote}>Save</Button>
+            <Button onClick={handleSaveNoteClick}>Save</Button>
             <Popconfirm
               title="Delete note"
               description="Are you sure to delete this note?"

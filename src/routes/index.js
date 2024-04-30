@@ -1,7 +1,5 @@
 /* App */
 import DashboardPage from "./app/dashboard";
-import CollectionsPage from "./app/collections";
-import NotebooksPage from "./app/notebooks";
 import NotesPage from "./app/notes";
 import NotePage from "./app/note";
 
@@ -16,7 +14,7 @@ import LandingPage from "./misc/landing";
 import LoadingPage from "./misc/loading";
 import NoRoutePage from "./misc/noRoute";
 
-export { DashboardPage, CollectionsPage, NotebooksPage, NotesPage, NotePage }; // App
+export { DashboardPage, NotesPage, NotePage }; // App
 
 export { AccountPage, AppSettingsPage, SignInPage, SignUpPage }; // User
 
