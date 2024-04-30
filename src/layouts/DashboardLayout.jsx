@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Spinner } from "../components";
-import { addUser } from "../api";
+import { createUser } from "../api";
 
 const DashboardLayout = () => {
   const { isSignedIn, isLoaded } = useAuth();
@@ -23,11 +23,11 @@ const DashboardLayout = () => {
   const addNewUser = async () => {
     try {
       const data = {
-        uid: user.id,
+        id: user.id,
         username: user.username,
         email: user.primaryEmailAddress.emailAddress,
       };
-      await addUser(data);
+      await createUser(data);
     } catch (error) {
       console.error("Error adding user:", error);
       throw error;
