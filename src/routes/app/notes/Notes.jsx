@@ -7,11 +7,13 @@ import { TbNotebook } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { createNote, getNotesByUserId } from "../../../api";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "../../../components";
 
 const Notes = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -20,6 +22,7 @@ const Notes = () => {
         const res = await getNotesByUserId(user?.id);
         if (res?.data) {
           setNotes(res.data);
+          setIsLoading(false);
         }
       } catch (error) {
         console.error("Error fetching notes:", error);
@@ -38,6 +41,10 @@ const Notes = () => {
       console.error("Error creating note:", error);
     }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <StyledNotes>

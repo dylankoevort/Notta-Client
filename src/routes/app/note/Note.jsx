@@ -7,6 +7,7 @@ import { DeleteOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 import { Input } from "antd";
 import { useDebounce } from "../../../hooks";
 import { getNoteById, deleteNote, updateNote } from "../../../api/NoteGateway";
+import { Spinner } from "../../../components";
 
 const Note = () => {
   let { noteId } = useParams();
@@ -14,6 +15,7 @@ const Note = () => {
   const navigate = useNavigate();
   const { TextArea } = Input;
   const [messageApi, contextHolder] = message.useMessage();
+  const [isLoading, setIsLoading] = useState(true);
   const [noteData, setNoteData] = useState();
   const [deletePopOpen, setDeletePopOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -28,6 +30,7 @@ const Note = () => {
         const res = await getNoteById(user.id, noteId);
         if (res?.data) {
           setNoteData(res.data);
+          setIsLoading(false);
         }
       } catch (error) {
         console.error("Error fetching note:", error);
@@ -86,6 +89,11 @@ const Note = () => {
       setDeletePopOpen(false);
     }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       {contextHolder}
