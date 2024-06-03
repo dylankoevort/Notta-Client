@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 const StyledNotes = styled.div`
+  height: calc(100% - 40px); 
+  padding: 20px;
+
   .header {
     width: 100%;
     display: flex;
@@ -29,50 +32,52 @@ const StyledNoteContainer = styled.div`
 `;
 
 const StyledNoteItem = styled.div`
-  width: calc(100% - 20px);
-  min-height: 250px;
-  max-height: 250px;
-  height: 250px;
-
+  height: 200px;
   border-radius: 8px;
   background-color: #f5f5ef;
   padding: 10px;
-
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transition: all 0.2s ease-in-out;
 
   p {
     margin: 0;
   }
 
-  .note-title {
+  .note-title,
+  .note-content {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+  }
+
+  .note-title {
+    -webkit-line-clamp: 2;
     min-height: 42px;
+    margin: 0 0 10px;
   }
 
   .note-content {
     font-size: 0.9rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 8;
-    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
   }
 
   &:hover {
     cursor: pointer;
     box-shadow: rgba(99, 99, 99, 0.5) 0px 2px 8px 0px;
     transform: scale(1.01);
-    transition: all 0.2s ease-in-out;
   }
 
-  a {
-    &:hover {
-      color: #747474;
-      color: red;
+  a:hover {
+    color: #747474;
+  }
+
+  @media (min-width: 1024px) {
+    height: 250px;
+    width: calc(100% - 20px);
+
+    .note-content {
+      -webkit-line-clamp: 8;
     }
   }
 `;

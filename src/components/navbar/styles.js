@@ -1,46 +1,76 @@
 import styled from "styled-components";
 
 const StyledNavbar = styled.div`
-  max-height: calc(100% - 80px);
+  height: 100%;
   width: 100%;
-  min-width: 300px;
-  max-width: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
 
-  display: flex;
-  justify-content: center;
+  &.hidden {
+    display: none;
+  }
 
-  padding: 40px 0;
+  @media (min-width: 1024px) {
+    position: relative;
+    max-height: calc(100% - 80px);
+    min-width: 300px;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+
+    &.hidden {
+      display: flex !important;
+    }
+  }
 `;
 
 const StyledNavbarContainer = styled.div`
-  width: calc(100% - 60px);
-  max-width: calc(100% - 60px);
-  overflow-x: hidden;
-
+  height: calc(100% - 40px);
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
+  background-color: #fbfbfa;
 
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-  box-shadow: 4px 4px 10px 1px rgba(0, 0, 0, 0.25);
-  background-color: #f5f5ef;
+  &.mobile {
+    justify-content: center;
+    align-items: center;
 
-  padding: 30px;
+    h1 {
+      margin: 0;
+      color: #747474;
+      font-weight: 400;
+    }
+  }
 
-  h3 {
+  &.desktop {
+    display: none;
+  }
+
+  .close-nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  h3,
+  p {
     margin: 0;
-    color: #aaaaaa;
     font-size: 14px;
     font-weight: 400;
   }
 
+  h3 {
+    color: #aaaaaa;
+  }
+
   p {
-    margin: 0;
     color: #747474;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 16px;
   }
 
   ul {
@@ -63,7 +93,7 @@ const StyledNavbarContainer = styled.div`
 
   .nav-section {
     margin: 10px 0;
-    max-width: 240px;
+    max-width: 100%;
 
     h3 {
       margin-bottom: 20px;
@@ -86,10 +116,8 @@ const StyledNavbarContainer = styled.div`
       }
     }
 
-    &.active {
-      p {
-        font-weight: 700;
-      }
+    &.active p {
+      font-weight: 700;
     }
 
     .note-title {
@@ -104,14 +132,55 @@ const StyledNavbarContainer = styled.div`
   }
 
   .version {
+    position: absolute;
+    bottom: 20px;
     margin-top: 10px;
-    width: 100%;
+    width: calc(100% - 40px);
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     .koevort {
       cursor: pointer;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    &.mobile {
+      display: none;
+    }
+
+    &.desktop {
+      display: flex;
+    }
+
+    width: calc(100% - 60px);
+    max-width: calc(100% - 60px);
+    overflow-x: hidden;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 4px 4px 10px 1px rgba(0, 0, 0, 0.25);
+    background-color: #f5f5ef;
+    padding: 30px;
+
+    h3 {
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    .nav-section {
+      max-width: 240px;
+    }
+
+    .version {
+      position: static;
+      width: 100%;
     }
   }
 `;

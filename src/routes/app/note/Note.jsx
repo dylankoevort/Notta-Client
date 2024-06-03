@@ -27,6 +27,7 @@ const Note = () => {
   useEffect(() => {
     const fetchNote = async () => {
       try {
+        setIsLoading(true);
         const res = await getNoteById(user.id, noteId);
         if (res?.data) {
           setNoteData(res.data);

@@ -47,7 +47,7 @@ const Notes = () => {
   }
 
   return (
-    <StyledNotes>
+    <StyledNotes id="StyledNotes">
       <div className="header">
         <span className="title">
           <TbNotebook size={43} />
@@ -64,7 +64,7 @@ const Notes = () => {
 
       <Divider />
 
-      <StyledNoteContainer id="note-container">
+      <StyledNoteContainer id="StyledNoteContainer">
         {notes.map((note) => (
           <Link key={note.noteId} to={`/notes/${note.noteId}`}>
             <StyledNoteItem
