@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-const StyledNote = styled.div``;
+const StyledNote = styled.div`
+  padding: 20px;
+
+  @media (min-width: 1024px) {
+    padding: 0;
+  }
+`;
 
 const StyledNoteHeader = styled.div`
   width: 100%;
@@ -17,6 +23,7 @@ const StyledNoteHeader = styled.div`
     margin-inline-end: 0px;
     font-weight: bold;
     padding: 0;
+    text-overflow: ellipsis;
   }
 
   .note-actions {
