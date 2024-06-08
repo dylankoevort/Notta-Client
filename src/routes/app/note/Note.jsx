@@ -6,8 +6,12 @@ import { Button, message, Popconfirm } from "antd";
 import { DeleteOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 import { Input } from "antd";
 import { useDebounce } from "../../../hooks";
-import { getNoteById, deleteNote, updateNote } from "../../../api/NoteGateway";
 import { Spinner } from "../../../components";
+import {
+  getNoteById,
+  updateNote,
+  deleteNote,
+} from "../../../api/NoteRepository";
 
 const Note = () => {
   let { noteId } = useParams();
@@ -15,22 +19,23 @@ const Note = () => {
   const navigate = useNavigate();
   const { TextArea } = Input;
   const [messageApi, contextHolder] = message.useMessage();
+  const isFirstRender = useRef(true);
+
   const [isLoading, setIsLoading] = useState(true);
   const [noteData, setNoteData] = useState();
   const [deletePopOpen, setDeletePopOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const isFirstRender = useRef(true);
 
-  const debouncedTitle = useDebounce(noteData?.noteTitle, 5000);
-  const debouncedContent = useDebounce(noteData?.noteContent, 10000);
+  const debouncedTitle = useDebounce(noteData?.NoteTitle, 5000);
+  const debouncedContent = useDebounce(noteData?.NoteContent, 10000);
 
   useEffect(() => {
     const fetchNote = async () => {
       try {
         setIsLoading(true);
         const res = await getNoteById(user.id, noteId);
-        if (res?.data) {
-          setNoteData(res.data);
+        if (res) {
+          setNoteData(res);
           setIsLoading(false);
         }
       } catch (error) {
@@ -75,12 +80,10 @@ const Note = () => {
   const handleDeleteNote = async () => {
     setDeleteLoading(true);
     try {
-      const res = await deleteNote(user.id, noteData.noteId);
-      if (res?.status === 204) {
+      const res = await deleteNote(user.id, noteData.NoteId);
+      if (res === "success") {
         setDeletePopOpen(false);
         navigate("/notes");
-      } else {
-        throw new Error("Unexpected status code: " + res.status);
       }
     } catch (error) {
       console.error("Error deleting note:", error);
@@ -104,9 +107,9 @@ const Note = () => {
             id="note-title"
             variant="borderless"
             className="note-title"
-            value={noteData?.noteTitle}
+            value={noteData?.NoteTitle}
             onChange={(e) =>
-              setNoteData({ ...noteData, noteTitle: e.target.value })
+              setNoteData({ ...noteData, NoteTitle: e.target.value })
             }
           />
           <div className="note-actions">
@@ -134,9 +137,9 @@ const Note = () => {
           <TextArea
             id="note-editor"
             className="note-editor"
-            value={noteData?.noteContent}
+            value={noteData?.NoteContent}
             onChange={(e) =>
-              setNoteData({ ...noteData, noteContent: e.target.value })
+              setNoteData({ ...noteData, NoteContent: e.target.value })
             }
             rows={4}
             autoSize

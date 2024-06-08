@@ -1,7 +1,7 @@
 {
-  "name": "nota",
+  "name": "notta",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.1.0",
   "type": "module",
   "scripts": {
     "dev": "npm run copy-env --env=dev && vite --open --port 5000 --host",
@@ -21,6 +21,7 @@
     "antd": "^5.15.3",
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",
+    "firebase": "^10.12.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",

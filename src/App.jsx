@@ -5,7 +5,7 @@ import { Navbar } from "./components";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 const App = () => {
-  const [navOpen, setNavOpen] = useState(true);
+  const [navOpen, setNavOpen] = useState(false);
 
   const toggleNav = () => {
     setNavOpen(!navOpen);
