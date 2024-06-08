@@ -5,9 +5,9 @@ import { Divider, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { TbNotebook } from "react-icons/tb";
 import { Link } from "react-router-dom";
-import { createNote, getNotesByUserId } from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "../../../components";
+import { getNotesByUserId, createNote } from "../../../api/NoteRepository";
 
 const Notes = () => {
   const { user } = useUser();
@@ -20,8 +20,8 @@ const Notes = () => {
       if (!user) return;
       try {
         const res = await getNotesByUserId(user?.id);
-        if (res?.data) {
-          setNotes(res.data);
+        if (res) {
+          setNotes(res);
           setIsLoading(false);
         }
       } catch (error) {
@@ -33,9 +33,9 @@ const Notes = () => {
 
   const createNewNote = async () => {
     try {
-      const res = await createNote(user);
-      if (res?.data?.noteId) {
-        navigate(`/notes/${res.data.noteId}`);
+      const res = await createNote(user?.id);
+      if (res?.NoteId) {
+        navigate(`/notes/${res.NoteId}`);
       }
     } catch (error) {
       console.error("Error creating note:", error);
@@ -66,13 +66,13 @@ const Notes = () => {
 
       <StyledNoteContainer id="StyledNoteContainer">
         {notes.map((note) => (
-          <Link key={note.noteId} to={`/notes/${note.noteId}`}>
+          <Link key={note.NoteId} to={`/notes/${note.NoteId}`}>
             <StyledNoteItem
-              id={`note-${note.noteId}-${note.noteTitle}`}
-              key={note.noteId}
+              id={`note-${note.NoteId}-${note.noteTitle}`}
+              key={note.NoteId}
             >
-              <h4 className="note-title">{note.noteTitle}</h4>
-              <p className="note-content">{note.noteContent}</p>
+              <h4 className="note-title">{note.NoteTitle}</h4>
+              <p className="note-content">{note.NoteContent}</p>
             </StyledNoteItem>
           </Link>
         ))}

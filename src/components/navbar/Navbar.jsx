@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { StyledNavbar, StyledNavbarContainer } from "./styles";
 import { NavLink, useLocation } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
-import { UserOutlined, HomeOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { SlNotebook } from "react-icons/sl";
 import { CgNotes } from "react-icons/cg";
 import { Divider } from "antd";
 import { UserButton, useClerk } from "@clerk/clerk-react";
-import { getNotesByUserId } from "../../api";
 import { GrClose } from "react-icons/gr";
+import { getNotesByUserId } from "../../api/NoteRepository";
+
+const VERSION = "2.1.0";
 
 const Navbar = ({ toggleNav, navOpen }) => {
   const { user } = useUser();
@@ -24,8 +26,8 @@ const Navbar = ({ toggleNav, navOpen }) => {
     if (!user) return;
     try {
       const res = await getNotesByUserId(user?.id);
-      if (res?.data) {
-        setNotes(res.data);
+      if (res) {
+        setNotes(res);
       }
     } catch (error) {
       console.error("Error fetching notes:", error);
@@ -54,14 +56,14 @@ const Navbar = ({ toggleNav, navOpen }) => {
           <h3>notes</h3>
           <ul>
             {notes.map((note) => (
-              <li key={note.noteId}>
+              <li key={note.NoteId}>
                 <NavLink
                   className="nav-item"
-                  to={`/notes/${note.noteId}`}
+                  to={`/notes/${note.NoteId}`}
                   onClick={toggleNav}
                 >
                   <CgNotes />
-                  <p className="note-title">{note.noteTitle}</p>
+                  <p className="note-title">{note.NoteTitle}</p>
                 </NavLink>
               </li>
             ))}
@@ -82,7 +84,7 @@ const Navbar = ({ toggleNav, navOpen }) => {
           <h3 className="koevort" onClick={openPortfolio}>
             by koevort.
           </h3>
-          <h3>1.3.0</h3>
+          <h3>{VERSION}</h3>
         </div>
       </StyledNavbarContainer>
     );
@@ -112,7 +114,7 @@ const Navbar = ({ toggleNav, navOpen }) => {
           <h3 className="koevort" onClick={openPortfolio}>
             by koevort.
           </h3>
-          <h3>1.3.0</h3>
+          <h3>{VERSION}</h3>
         </div>
       </StyledNavbarContainer>
     );

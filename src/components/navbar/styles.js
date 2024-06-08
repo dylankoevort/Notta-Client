@@ -154,6 +154,7 @@ const StyledNavbarContainer = styled.div`
       display: flex;
     }
 
+    height: auto;
     width: calc(100% - 60px);
     max-width: calc(100% - 60px);
     overflow-x: hidden;

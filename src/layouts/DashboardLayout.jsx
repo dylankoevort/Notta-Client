@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Spinner } from "../components";
-import { createUser } from "../api";
+import { createUser } from "../api/UserRepository";
+import { auth } from "../firebase";
+import { signInAnonymously } from "firebase/auth";
 
 const DashboardLayout = () => {
   const { isSignedIn, isLoaded } = useAuth();
@@ -16,20 +18,29 @@ const DashboardLayout = () => {
     }
 
     if (isLoaded && isSignedIn) {
+      firebaseSignIn();
       addNewUser();
     }
   }, [isSignedIn]);
 
+  const firebaseSignIn = async () => {
+    await signInAnonymously(auth)
+      .then(() => {
+        console.log("FB Sign in: SUCCESS");
+      })
+      .catch((error) => {
+        console.log("FB Sign in: ERROR");
+        console.error(error);
+      });
+  };
+
   const addNewUser = async () => {
     try {
-      const data = {
-        id: user.id,
-        username: user.username,
-        email: user.primaryEmailAddress.emailAddress,
-      };
-      await createUser(data);
+      await createUser(user);
+      console.log("Store User: SUCCESS");
     } catch (error) {
-      console.error("Error adding user:", error);
+      console.log("Store User: ERROR");
+      console.error(error);
       throw error;
     }
   };
